@@ -305,10 +305,11 @@ export function AtlasHome() {
         </div>
       </div>
 
-      {selected && view !== "neural" && (
+      {selected && (
         <div className="pointer-events-auto absolute bottom-28 left-6 z-20 max-w-sm hud-glass rounded-2xl p-4 md:left-10">
           <p className="text-[9px] uppercase tracking-[0.22em] text-[var(--muted)]">
             {ZONE_META[selected.region].label} · {selected.status}
+            {sparkIds.has(selected.id) ? " · just added" : ""}
           </p>
           <h2 className="font-display mt-1 text-2xl text-[var(--ink)]">
             {selected.title}
@@ -321,9 +322,28 @@ export function AtlasHome() {
                 ? "newly mapped"
                 : "holding strong"}
           </p>
-          <p className="mt-2 text-[10px] text-[var(--muted)]">
-            Linked neurons stay lit — click a neighbor to traverse.
-          </p>
+          {(() => {
+            const teach =
+              atlas.teachCards?.find((t) => t.conceptId === selected.id) ||
+              null;
+            if (!teach?.summary?.length) {
+              return (
+                <p className="mt-2 text-[10px] text-[var(--muted)]">
+                  Linked neurons stay lit — click a neighbor to traverse.
+                </p>
+              );
+            }
+            return (
+              <ul className="mt-2 space-y-1.5 text-[11px] leading-snug text-[var(--ink)]">
+                {teach.summary.slice(0, 3).map((line) => (
+                  <li key={line} className="flex gap-2">
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            );
+          })()}
           <div className="mt-3 flex gap-3">
             <Link
               href="/today"
@@ -342,7 +362,7 @@ export function AtlasHome() {
         </div>
       )}
 
-      {showHero && !pasteOpen && (
+      {showHero && !pasteOpen && !selected && (
         <SynapseWelcome
           dueCount={atlas.dueCount}
           onDismiss={dismissHero}
