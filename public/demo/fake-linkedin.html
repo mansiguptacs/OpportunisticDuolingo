@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fake LinkedIn — Streaming Lakehouse Thread</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f3f2ef;
+        color: #191919;
+      }
+      .card {
+        max-width: 680px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      .meta {
+        color: #666;
+        font-size: 13px;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 12px 0;
+      }
+      p {
+        line-height: 1.55;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <article class="card">
+      <div class="meta">Engineering Post · 12,480 impressions · demo fixture page</div>
+      <h1>We rebuilt our analytics path as a streaming lakehouse</h1>
+      <p>
+        After years of batch ETL, our team moved to a streaming lakehouse. The hardest
+        lessons were not the fancy sinks — they were partitioning, watermarks, and
+        compaction discipline.
+      </p>
+      <p>
+        <strong>Partitioning:</strong> A low-cardinality customer_tier key created one
+        hot partition while others sat idle. We switched to a hashed entity id aligned
+        with query patterns and lag collapsed overnight.
+      </p>
+      <p>
+        <strong>Watermarks:</strong> Event-time windows never closed until we set an
+        explicit watermark policy for late data. Late arrivals go to a side output
+        instead of blocking the main pipeline.
+      </p>
+      <p>
+        <strong>Exactly-once & compaction:</strong> Idempotent sinks plus periodic
+        small-file compaction kept object-storage scans cheap. Without compaction,
+        query planners drowned in tiny parquet files.
+      </p>
+      <p>
+        If you are stuck between “batch forever” and “pure stream everything,” start
+        with watermark correctness and partition skew before chasing new engines.
+      </p>
+    </article>
+  </body>
+</html>

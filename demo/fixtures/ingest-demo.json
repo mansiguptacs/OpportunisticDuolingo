@@ -1,0 +1,57 @@
+{
+  "title": "Streaming Lakehouse — Engineering Post",
+  "sourceUrl": "https://example.com/demo-ingest",
+  "rawText": "This article covers building a streaming lakehouse: partitioning strategies for even load, watermarks for event-time windows, exactly-once sinks, and periodic compaction of small files in object storage.",
+  "refined": {
+    "concepts": [
+      {
+        "title": "Streaming Topology",
+        "region": "prefrontal",
+        "x": 22,
+        "y": 38
+      },
+      {
+        "title": "Z-Order Layout",
+        "region": "parietal",
+        "x": 74,
+        "y": 44
+      },
+      {
+        "title": "CDC Ingestion",
+        "region": "temporal",
+        "x": 44,
+        "y": 72
+      }
+    ],
+    "teachCards": [
+      {
+        "title": "Streaming Topology Basics",
+        "summary": [
+          "Sources, transforms, and sinks form a directed acyclic flow.",
+          "Backpressure propagates upstream when sinks slow down.",
+          "Idempotent sinks make retries safe."
+        ],
+        "diagramMermaid": "flowchart LR\n  Source --> Transform --> Sink"
+      },
+      {
+        "title": "Z-Order for Lake Queries",
+        "summary": [
+          "Z-ordering co-locates related multi-column values.",
+          "It speeds multi-predicate filters on large tables.",
+          "Trade write cost for cheaper selective scans."
+        ],
+        "diagramMermaid": "flowchart TD\n  Rows --> Z[Z-Order Clustering]\n  Z --> Fast[Faster multi-column filters]"
+      }
+    ],
+    "quiz": {
+      "prompt": "Why combine partitioning with Z-order in a lakehouse?",
+      "choices": [
+        "To eliminate the need for watermarks",
+        "Partition prunes files; Z-order improves locality inside partitions",
+        "Z-order replaces primary keys",
+        "It disables compaction"
+      ],
+      "correctIndex": 1
+    }
+  }
+}

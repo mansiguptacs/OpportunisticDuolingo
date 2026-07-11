@@ -1,0 +1,828 @@
+{
+  "user": {
+    "id": "lifelong-learner",
+    "streak": 12,
+    "xp": 1240,
+    "vitality": 52
+  },
+  "sources": [
+    {
+      "id": "src-race",
+      "title": "SQL Race Conditions in High-Throughput Services",
+      "sourceUrl": "https://example.com/sql-race-conditions",
+      "ingestedAt": "2026-06-29T10:00:00.000Z"
+    },
+    {
+      "id": "src-stream",
+      "title": "Building a Streaming Lakehouse at Scale",
+      "sourceUrl": "https://example.com/streaming-lakehouse",
+      "ingestedAt": "2026-07-08T18:00:00.000Z"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "c-race",
+      "title": "SQL Race Conditions",
+      "region": "prefrontal",
+      "x": 20,
+      "y": 25,
+      "mastery": 25,
+      "nextReviewAt": "2026-07-05T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-01T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "overdue"
+    },
+    {
+      "id": "c-locking",
+      "title": "Optimistic Locking",
+      "region": "prefrontal",
+      "x": 35,
+      "y": 25,
+      "mastery": 30,
+      "nextReviewAt": "2026-07-06T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-02T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "overdue"
+    },
+    {
+      "id": "c-partition",
+      "title": "Partitioning",
+      "region": "parietal",
+      "x": 21,
+      "y": 24,
+      "mastery": 55,
+      "nextReviewAt": "2026-07-11T09:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T18:30:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-watermark",
+      "title": "Watermarks",
+      "region": "parietal",
+      "x": 36,
+      "y": 24,
+      "mastery": 60,
+      "nextReviewAt": "2026-07-12T09:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T10:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-exactly",
+      "title": "Exactly-once Semantics",
+      "region": "temporal",
+      "x": 19,
+      "y": 26,
+      "mastery": 70,
+      "nextReviewAt": "2026-07-14T09:00:00.000Z",
+      "lastReviewedAt": "2026-07-10T11:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-compaction",
+      "title": "Lakehouse Compaction",
+      "region": "hippocampus",
+      "x": 20,
+      "y": 24,
+      "mastery": 40,
+      "nextReviewAt": "2026-07-11T08:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-cap",
+      "title": "CAP Tradeoffs",
+      "region": "prefrontal",
+      "x": 50,
+      "y": 25,
+      "mastery": 72,
+      "nextReviewAt": "2026-07-20T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-saga",
+      "title": "Saga Orchestration",
+      "region": "prefrontal",
+      "x": 65,
+      "y": 25,
+      "mastery": 68,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-idempotency",
+      "title": "Idempotent Writes",
+      "region": "prefrontal",
+      "x": 80,
+      "y": 25,
+      "mastery": 35,
+      "nextReviewAt": "2026-07-10T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-07T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-circuit",
+      "title": "Circuit Breakers",
+      "region": "prefrontal",
+      "x": 20,
+      "y": 51,
+      "mastery": 22,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "fresh"
+    },
+    {
+      "id": "c-backpressure",
+      "title": "Backpressure",
+      "region": "prefrontal",
+      "x": 35,
+      "y": 51,
+      "mastery": 48,
+      "nextReviewAt": "2026-07-11T15:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T15:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-sharding",
+      "title": "Consistent Hashing",
+      "region": "parietal",
+      "x": 51,
+      "y": 24,
+      "mastery": 80,
+      "nextReviewAt": "2026-07-22T09:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T09:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-bloom",
+      "title": "Bloom Filters",
+      "region": "parietal",
+      "x": 66,
+      "y": 24,
+      "mastery": 75,
+      "nextReviewAt": "2026-07-21T09:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T09:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-lsm",
+      "title": "LSM Trees",
+      "region": "parietal",
+      "x": 82,
+      "y": 24,
+      "mastery": 28,
+      "nextReviewAt": "2026-07-10T09:00:00.000Z",
+      "lastReviewedAt": "2026-07-06T09:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "overdue"
+    },
+    {
+      "id": "c-index",
+      "title": "Secondary Indexes",
+      "region": "parietal",
+      "x": 21,
+      "y": 49,
+      "mastery": 18,
+      "nextReviewAt": "2026-07-13T09:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "fresh"
+    },
+    {
+      "id": "c-cdc-keys",
+      "title": "CDC Key Design",
+      "region": "parietal",
+      "x": 36,
+      "y": 49,
+      "mastery": 50,
+      "nextReviewAt": "2026-07-11T18:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T18:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-schema",
+      "title": "Schema Evolution",
+      "region": "temporal",
+      "x": 34,
+      "y": 26,
+      "mastery": 65,
+      "nextReviewAt": "2026-07-19T10:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T10:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-avro",
+      "title": "Avro Compatibility",
+      "region": "temporal",
+      "x": 49,
+      "y": 26,
+      "mastery": 58,
+      "nextReviewAt": "2026-07-17T10:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T10:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-dlq",
+      "title": "Dead Letter Queues",
+      "region": "temporal",
+      "x": 64,
+      "y": 26,
+      "mastery": 32,
+      "nextReviewAt": "2026-07-10T10:00:00.000Z",
+      "lastReviewedAt": "2026-07-07T10:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-outbox",
+      "title": "Transactional Outbox",
+      "region": "temporal",
+      "x": 79,
+      "y": 26,
+      "mastery": 20,
+      "nextReviewAt": "2026-07-12T10:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "fresh"
+    },
+    {
+      "id": "c-replay",
+      "title": "Event Replay Stories",
+      "region": "temporal",
+      "x": 19,
+      "y": 51,
+      "mastery": 42,
+      "nextReviewAt": "2026-07-11T10:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T10:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-spaced",
+      "title": "Spaced Repetition Curves",
+      "region": "hippocampus",
+      "x": 35,
+      "y": 24,
+      "mastery": 78,
+      "nextReviewAt": "2026-07-25T08:00:00.000Z",
+      "lastReviewedAt": "2026-07-10T08:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-retrieval",
+      "title": "Retrieval Practice",
+      "region": "hippocampus",
+      "x": 51,
+      "y": 24,
+      "mastery": 70,
+      "nextReviewAt": "2026-07-20T08:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T08:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-interleave",
+      "title": "Interleaved Practice",
+      "region": "hippocampus",
+      "x": 66,
+      "y": 24,
+      "mastery": 26,
+      "nextReviewAt": "2026-07-09T08:00:00.000Z",
+      "lastReviewedAt": "2026-07-05T08:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "overdue"
+    },
+    {
+      "id": "c-desirable",
+      "title": "Desirable Difficulties",
+      "region": "hippocampus",
+      "x": 81,
+      "y": 24,
+      "mastery": 15,
+      "nextReviewAt": "2026-07-13T08:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "fresh"
+    },
+    {
+      "id": "c-transfer",
+      "title": "Far Transfer",
+      "region": "hippocampus",
+      "x": 20,
+      "y": 50,
+      "mastery": 45,
+      "nextReviewAt": "2026-07-11T08:00:00.000Z",
+      "lastReviewedAt": "2026-07-08T08:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-metacog",
+      "title": "Metacognitive Monitoring",
+      "region": "hippocampus",
+      "x": 35,
+      "y": 50,
+      "mastery": 62,
+      "nextReviewAt": "2026-07-16T08:00:00.000Z",
+      "lastReviewedAt": "2026-07-07T08:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-rate-limit",
+      "title": "Rate Limiting",
+      "region": "prefrontal",
+      "x": 50,
+      "y": 51,
+      "mastery": 72,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-bulkhead",
+      "title": "Bulkhead Isolation",
+      "region": "prefrontal",
+      "x": 65,
+      "y": 51,
+      "mastery": 38,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-retry",
+      "title": "Retry with Jitter",
+      "region": "prefrontal",
+      "x": 80,
+      "y": 51,
+      "mastery": 25,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "fresh"
+    },
+    {
+      "id": "c-timeout",
+      "title": "Deadline Propagation",
+      "region": "prefrontal",
+      "x": 20,
+      "y": 76,
+      "mastery": 18,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "overdue"
+    },
+    {
+      "id": "c-feature-flag",
+      "title": "Feature Flags",
+      "region": "prefrontal",
+      "x": 35,
+      "y": 76,
+      "mastery": 65,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-cqrs",
+      "title": "CQRS Patterns",
+      "region": "prefrontal",
+      "x": 50,
+      "y": 76,
+      "mastery": 48,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-hexagonal",
+      "title": "Hexagonal Architecture",
+      "region": "prefrontal",
+      "x": 65,
+      "y": 76,
+      "mastery": 55,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-load-shed",
+      "title": "Load Shedding",
+      "region": "prefrontal",
+      "x": 80,
+      "y": 76,
+      "mastery": 30,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-bplus",
+      "title": "B+ Tree Layout",
+      "region": "parietal",
+      "x": 51,
+      "y": 49,
+      "mastery": 72,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "fresh"
+    },
+    {
+      "id": "c-vector-clock",
+      "title": "Vector Clocks",
+      "region": "parietal",
+      "x": 66,
+      "y": 49,
+      "mastery": 38,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "overdue"
+    },
+    {
+      "id": "c-crdt",
+      "title": "CRDTs",
+      "region": "parietal",
+      "x": 82,
+      "y": 49,
+      "mastery": 25,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-quorum",
+      "title": "Quorum Reads",
+      "region": "parietal",
+      "x": 21,
+      "y": 75,
+      "mastery": 18,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-mermaid",
+      "title": "Merkle Trees",
+      "region": "parietal",
+      "x": 36,
+      "y": 75,
+      "mastery": 65,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-skiplist",
+      "title": "Skip Lists",
+      "region": "parietal",
+      "x": 51,
+      "y": 75,
+      "mastery": 48,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-roaring",
+      "title": "Roaring Bitmaps",
+      "region": "parietal",
+      "x": 66,
+      "y": 75,
+      "mastery": 55,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "fresh"
+    },
+    {
+      "id": "c-columnar",
+      "title": "Columnar Storage",
+      "region": "parietal",
+      "x": 82,
+      "y": 75,
+      "mastery": 30,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "overdue"
+    },
+    {
+      "id": "c-grpc",
+      "title": "gRPC Streaming",
+      "region": "temporal",
+      "x": 34,
+      "y": 51,
+      "mastery": 72,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-openapi",
+      "title": "OpenAPI Contracts",
+      "region": "temporal",
+      "x": 49,
+      "y": 51,
+      "mastery": 38,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-protobuf",
+      "title": "Protobuf Evolution",
+      "region": "temporal",
+      "x": 64,
+      "y": 51,
+      "mastery": 25,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-jwt",
+      "title": "JWT Pitfalls",
+      "region": "temporal",
+      "x": 79,
+      "y": 51,
+      "mastery": 18,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-oauth",
+      "title": "OAuth Scopes",
+      "region": "temporal",
+      "x": 19,
+      "y": 76,
+      "mastery": 65,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "fresh"
+    },
+    {
+      "id": "c-sagas-story",
+      "title": "Compensation Stories",
+      "region": "temporal",
+      "x": 34,
+      "y": 76,
+      "mastery": 48,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "overdue"
+    },
+    {
+      "id": "c-tracing",
+      "title": "Distributed Tracing",
+      "region": "temporal",
+      "x": 49,
+      "y": 76,
+      "mastery": 55,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-log-struct",
+      "title": "Structured Logging",
+      "region": "temporal",
+      "x": 64,
+      "y": 76,
+      "mastery": 30,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    },
+    {
+      "id": "c-anki",
+      "title": "Anki Interval Math",
+      "region": "hippocampus",
+      "x": 51,
+      "y": 50,
+      "mastery": 72,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-elaboration",
+      "title": "Elaborative Encoding",
+      "region": "hippocampus",
+      "x": 66,
+      "y": 50,
+      "mastery": 38,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-dual-code",
+      "title": "Dual Coding",
+      "region": "hippocampus",
+      "x": 81,
+      "y": 50,
+      "mastery": 25,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "fresh"
+    },
+    {
+      "id": "c-chunking",
+      "title": "Chunking Strategies",
+      "region": "hippocampus",
+      "x": 20,
+      "y": 75,
+      "mastery": 18,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "overdue"
+    },
+    {
+      "id": "c-testing-effect",
+      "title": "Testing Effect",
+      "region": "hippocampus",
+      "x": 35,
+      "y": 75,
+      "mastery": 65,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-race",
+      "status": "strong"
+    },
+    {
+      "id": "c-forgetting",
+      "title": "Forgetting Curve",
+      "region": "hippocampus",
+      "x": 51,
+      "y": 75,
+      "mastery": 48,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-race",
+      "status": "due"
+    },
+    {
+      "id": "c-context",
+      "title": "Context-dependent Memory",
+      "region": "hippocampus",
+      "x": 66,
+      "y": 75,
+      "mastery": 55,
+      "nextReviewAt": "2026-07-18T12:00:00.000Z",
+      "lastReviewedAt": null,
+      "sourceId": "src-stream",
+      "status": "strong"
+    },
+    {
+      "id": "c-generation",
+      "title": "Generation Effect",
+      "region": "hippocampus",
+      "x": 81,
+      "y": 75,
+      "mastery": 30,
+      "nextReviewAt": "2026-07-12T12:00:00.000Z",
+      "lastReviewedAt": "2026-07-09T12:00:00.000Z",
+      "sourceId": "src-stream",
+      "status": "due"
+    }
+  ],
+  "teachCards": [
+    {
+      "id": "tc-partition",
+      "conceptId": "c-partition",
+      "title": "Partitioning in Streaming Lakes",
+      "summary": [
+        "Partition keys decide how events fan out across workers.",
+        "Bad keys create hot partitions and lag spikes.",
+        "Prefer high-cardinality keys that match query patterns."
+      ],
+      "diagramMermaid": "flowchart LR\n  Events --> Key{Partition Key}\n  Key --> P1[Partition 1]\n  Key --> P2[Partition 2]\n  Key --> P3[Partition 3]"
+    },
+    {
+      "id": "tc-watermark",
+      "conceptId": "c-watermark",
+      "title": "Watermarks & Late Data",
+      "summary": [
+        "Watermarks estimate event-time progress in a stream.",
+        "They let windows close without waiting forever.",
+        "Late events after the watermark need a defined policy."
+      ],
+      "diagramMermaid": "flowchart TD\n  Stream --> WM[Watermark]\n  WM --> Open[Open Windows]\n  WM --> Close[Close Windows]\n  Late[Late Events] --> Policy{Drop or Side Output}"
+    },
+    {
+      "id": "tc-race",
+      "conceptId": "c-race",
+      "title": "SQL Race Conditions (Revision)",
+      "summary": [
+        "Two transactions can read the same row before either writes.",
+        "Lost updates appear when last-write-wins without versioning.",
+        "Optimistic locking uses a version column to detect conflicts."
+      ],
+      "diagramMermaid": "sequenceDiagram\n  T1->>DB: READ balance=100\n  T2->>DB: READ balance=100\n  T1->>DB: WRITE 90\n  T2->>DB: WRITE 80\n  Note over DB: Lost update without version check"
+    },
+    {
+      "id": "tc-compaction",
+      "conceptId": "c-compaction",
+      "title": "Why Lakehouses Compact",
+      "summary": [
+        "Small files kill scan performance in object storage.",
+        "Compaction merges tiny files into larger, query-friendly ones.",
+        "Schedule compaction against write amplification cost."
+      ],
+      "diagramMermaid": "flowchart LR\n  S1[Small files] --> Compact\n  S2[Small files] --> Compact\n  Compact --> Big[Larger parquet files]"
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "q-partition",
+      "prompt": "You see one partition lagging while others are idle. What is the most likely cause?",
+      "choices": [
+        "Watermark is too aggressive",
+        "Hot partition from a skewed key",
+        "Compaction ran too often",
+        "Exactly-once is disabled"
+      ],
+      "correctIndex": 1,
+      "conceptIds": [
+        "c-partition"
+      ]
+    },
+    {
+      "id": "q-synth",
+      "prompt": "A streaming writer upserts lakehouse rows while two jobs race on the same primary key. Which pairing best prevents deadlock-class lost updates?",
+      "choices": [
+        "Random partition key + no version column",
+        "Stable partition key + optimistic version checks",
+        "Drop watermarks + last-write-wins",
+        "Disable compaction forever"
+      ],
+      "correctIndex": 1,
+      "conceptIds": [
+        "c-partition",
+        "c-race"
+      ],
+      "synthesizesWith": "SQL Race Conditions"
+    },
+    {
+      "id": "q-watermark",
+      "prompt": "What do watermarks primarily enable in event-time processing?",
+      "choices": [
+        "Encrypting payloads at rest",
+        "Closing windows without infinite waiting",
+        "Replacing partition keys",
+        "Guaranteeing zero late data"
+      ],
+      "correctIndex": 1,
+      "conceptIds": [
+        "c-watermark"
+      ]
+    }
+  ],
+  "blindSpots": [
+    "SQL race conditions \u2014 failed challenge 4 days ago",
+    "Optimistic locking \u2014 overdue revision"
+  ]
+}

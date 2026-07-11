@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Synapse</title>
+    <style>
+      :root {
+        --bg: #f4ebe3;
+        --ink: #1c2433;
+        --muted: #667085;
+        --accent: #e4572e;
+        --sky: #3d7dd9;
+        --mint: #2a9d8f;
+        --line: rgba(28, 36, 51, 0.12);
+      }
+      body {
+        margin: 0;
+        width: 320px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        background: linear-gradient(160deg, #efe8df, #f7f1ea);
+        color: var(--ink);
+      }
+      .wrap {
+        padding: 14px;
+      }
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Fraunces", serif;
+        font-size: 24px;
+        color: var(--accent);
+      }
+      p {
+        margin: 6px 0 12px;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      button {
+        width: 100%;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-bottom: 8px;
+      }
+      .primary {
+        background: var(--accent);
+        color: #fff;
+      }
+      .secondary {
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+      .sky {
+        background: var(--sky);
+        color: #fff;
+      }
+      .mint {
+        background: var(--mint);
+        color: #fff;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      label {
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      input[type="number"] {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px;
+        background: rgba(255, 255, 255, 0.8);
+        font-size: 12px;
+      }
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.65);
+        margin-bottom: 10px;
+      }
+      .toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      #status {
+        min-height: 16px;
+        font-size: 11px;
+        color: var(--muted);
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Synapse</h1>
+      <p>
+        Alchemize this tab, then get witty revisit nudges when neurons start to
+        fade.
+      </p>
+
+      <button class="primary" id="alchemize">Alchemize this page</button>
+      <button class="sky" id="ping">Ping me now</button>
+      <p style="margin-top:-4px;margin-bottom:10px;font-size:10px;color:var(--muted)">
+        Sends a witty system notification asking you to review.
+      </p>
+      <div class="row">
+        <button class="secondary" id="snooze1h">Snooze 1h</button>
+        <button class="secondary" id="snoozeLunch">Snooze 3h</button>
+      </div>
+      <button class="mint" id="openToday">Start today's path</button>
+      <button class="secondary" id="openAtlas">Open atlas</button>
+
+      <div class="panel">
+        <div class="toggle">
+          <span>Daily nudges</span>
+          <input type="checkbox" id="enabled" checked />
+        </div>
+        <div class="row">
+          <div>
+            <label for="morningHour">Morning</label>
+            <input id="morningHour" type="number" min="0" max="23" value="9" />
+          </div>
+          <div>
+            <label for="eveningHour">Evening</label>
+            <input id="eveningHour" type="number" min="0" max="23" value="18" />
+          </div>
+        </div>
+        <div class="row" style="margin-top: 8px">
+          <div>
+            <label for="quietStart">Quiet from</label>
+            <input id="quietStart" type="number" min="0" max="23" value="22" />
+          </div>
+          <div>
+            <label for="quietEnd">Quiet until</label>
+            <input id="quietEnd" type="number" min="0" max="23" value="7" />
+          </div>
+        </div>
+        <button class="secondary" id="saveSchedule" style="margin-top: 10px; margin-bottom: 0">
+          Save schedule
+        </button>
+      </div>
+
+      <div id="status"></div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

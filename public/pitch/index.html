@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Synapse — Pitch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f3efe8;
+        --ink: #1c2433;
+        --muted: #667085;
+        --accent: #e4572e;
+        --sky: #3d7dd9;
+        --mint: #2a9d8f;
+        --line: rgba(28, 36, 51, 0.12);
+        --glass: rgba(255, 255, 255, 0.78);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        color: var(--ink);
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        background:
+          radial-gradient(900px 520px at 8% -12%, rgba(61, 125, 217, 0.16), transparent 55%),
+          radial-gradient(820px 480px at 96% 0%, rgba(228, 87, 46, 0.12), transparent 50%),
+          radial-gradient(700px 420px at 70% 110%, rgba(42, 157, 143, 0.1), transparent 45%),
+          var(--bg);
+        overflow: hidden;
+      }
+
+      .deck {
+        height: 100%;
+        position: relative;
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: clamp(1.2rem, 4vw, 2.75rem);
+        padding-bottom: 3.4rem;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(14px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+        overflow: auto;
+      }
+
+      .slide.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+      }
+
+      .frame {
+        width: min(920px, 100%);
+      }
+
+      .title-slide {
+        text-align: center;
+      }
+
+      .kicker {
+        display: inline-block;
+        margin-bottom: 0.85rem;
+        padding: 0.32rem 0.7rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--glass);
+        font-size: 0.7rem;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .brand {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: clamp(3.4rem, 10vw, 6.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        margin: 0 0 0.85rem;
+        color: var(--accent);
+      }
+
+      .tagline {
+        margin: 0 auto 1.6rem;
+        max-width: 28ch;
+        font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .team {
+        display: inline-block;
+        padding: 0.85rem 1.2rem;
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+      }
+
+      .team .label {
+        display: block;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.25rem;
+      }
+
+      .team .name {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 1.35rem;
+      }
+
+      h2 {
+        font-family: "Fraunces", Georgia, serif;
+        font-size: clamp(1.8rem, 4.2vw, 2.6rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.85rem;
+      }
+
+      .lead {
+        margin: 0 0 1rem;
+        font-size: clamp(0.98rem, 1.8vw, 1.15rem);
+        line-height: 1.5;
+        color: var(--muted);
+        max-width: 48ch;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .points {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      @media (min-width: 800px) {
+        .points.three {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.9rem;
+        }
+      }
+
+      .points li {
+        border: 1px solid var(--line);
+        background: var(--glass);
+        border-radius: 1rem;
+        padding: 0.95rem 1rem;
+      }
+
+      .points b {
+        display: block;
+        font-family: "Fraunces", Georgia, serif;
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+        color: var(--accent);
+      }
+
+      .points span {
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.4;
+      }
+
+      .body {
+        margin: 1.1rem 0 0;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: var(--ink);
+        max-width: 56ch;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 1.1rem;
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        background: var(--glass);
+        border-radius: 999px;
+        padding: 0.38rem 0.7rem;
+        font-size: 0.72rem;
+      }
+
+      .shot {
+        border: 1px solid var(--line);
+        border-radius: 1.1rem;
+        overflow: hidden;
+        background: #1c2433;
+        box-shadow: 0 18px 50px rgba(28, 36, 51, 0.1);
+        margin-top: 0.9rem;
+      }
+
+      .shot video {
+        display: block;
+        width: 100%;
+        max-height: min(58vh, 540px);
+        object-fit: contain;
+        background: #1c2433;
+      }
+
+      .shot figcaption {
+        padding: 0.55rem 0.8rem;
+        font-size: 0.68rem;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .cta {
+        display: inline-flex;
+        margin-top: 1rem;
+        padding: 0.75rem 1.1rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 10px 28px rgba(228, 87, 46, 0.28);
+      }
+
+      .nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0.9rem;
+        display: flex;
+        justify-content: center;
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      .dots {
+        display: flex;
+        gap: 0.4rem;
+        pointer-events: auto;
+        padding: 0.4rem 0.55rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+      }
+
+      .dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 999px;
+        border: 0;
+        background: rgba(28, 36, 51, 0.2);
+        cursor: pointer;
+        padding: 0;
+        transition:
+          width 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .dot.on {
+        width: 1.25rem;
+        background: var(--accent);
+      }
+
+      .hint {
+        position: fixed;
+        top: 0.9rem;
+        right: 1rem;
+        z-index: 5;
+        font-size: 0.66rem;
+        color: var(--muted);
+        padding: 0.32rem 0.55rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid var(--line);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hint">← → or click</div>
+    <main class="deck" id="deck">
+      <section class="slide active" data-i="0">
+        <div class="frame title-slide">
+          <div class="kicker">Hackathon · Lifelong learning</div>
+          <h1 class="brand">Synapse</h1>
+          <p class="tagline">
+            An active second brain — capture what you read, revise before you forget.
+          </p>
+          <div class="team">
+            <span class="label">Built by</span>
+            <div class="name">Udit Gupta</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-i="1">
+        <div class="frame">
+          <div class="kicker">What it is</div>
+          <h2>
+            Turn browsing into a
+            <span class="accent">living neural atlas</span>.
+          </h2>
+          <p class="lead">
+            Synapse maps concepts from articles and tabs onto a 3D brain, then
+            pulls you back with witty nudges and a guided review path when
+            mastery starts to fade.
+          </p>
+          <ul class="points three">
+            <li>
+              <b>Capture</b>
+              <span>Alchemize any page via the Chrome extension into teachable concepts.</span>
+            </li>
+            <li>
+              <b>Explore</b>
+              <span>Neural, Graph, and Garden views show how ideas connect — and dry out.</span>
+            </li>
+            <li>
+              <b>Revise</b>
+              <span>Today’s path: teach → probe → synthesis quiz before concepts go overdue.</span>
+            </li>
+          </ul>
+          <p class="body">
+            Built on Butterbase (vault + Edge SSR), EverOS (agent memory), and Grok
+            (teach copy &amp; nudge tone) — live at synapse.butterbase.dev.
+          </p>
+          <div class="chips">
+            <span class="chip">Butterbase</span>
+            <span class="chip">EverOS</span>
+            <span class="chip">Grok</span>
+            <span class="chip">Next.js Edge</span>
+            <span class="chip">Chrome extension</span>
+          </div>
+          <a class="cta" href="https://synapse.butterbase.dev/atlas" target="_blank" rel="noreferrer"
+            >Open live app →</a
+          >
+        </div>
+      </section>
+
+      <section class="slide" data-i="2">
+        <div class="frame">
+          <div class="kicker">Demo</div>
+          <h2>See Synapse in motion.</h2>
+          <p class="lead">
+            A short product walkthrough of the atlas, views, and revision loop.
+          </p>
+          <figure class="shot">
+            <video id="demo-video" controls playsinline preload="metadata" poster="assets/neural.png">
+              <source src="assets/demo.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Demo reel — Synapse walkthrough</figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <nav class="nav" aria-label="Slides">
+      <div class="dots" id="dots"></div>
+    </nav>
+
+    <script>
+      const slides = [...document.querySelectorAll(".slide")];
+      const dotsEl = document.getElementById("dots");
+      let i = 0;
+
+      slides.forEach((_, idx) => {
+        const b = document.createElement("button");
+        b.className = "dot" + (idx === 0 ? " on" : "");
+        b.setAttribute("aria-label", "Go to slide " + (idx + 1));
+        b.addEventListener("click", (e) => {
+          e.stopPropagation();
+          go(idx);
+        });
+        dotsEl.appendChild(b);
+      });
+
+      const dots = [...dotsEl.querySelectorAll(".dot")];
+
+      function go(n) {
+        document.querySelectorAll("video").forEach((v) => v.pause());
+        i = (n + slides.length) % slides.length;
+        slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+        dots.forEach((d, idx) => d.classList.toggle("on", idx === i));
+        const active = slides[i];
+        if (active) active.scrollTop = 0;
+        const vid = active && active.querySelector("video");
+        if (vid) {
+          vid.currentTime = 0;
+          vid.play().catch(() => {});
+        }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        const vid = slides[i]?.querySelector("video");
+        if (e.key === " " && vid) {
+          e.preventDefault();
+          if (vid.paused) vid.play().catch(() => {});
+          else vid.pause();
+          return;
+        }
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          go(i + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          go(i - 1);
+        } else if (e.key === "Home" || e.key === "Escape") {
+          go(0);
+        } else if (e.key === "End") {
+          go(slides.length - 1);
+        }
+      });
+
+      document.getElementById("deck").addEventListener("click", (e) => {
+        if (e.target.closest("a, button, figure, img, video")) return;
+        if (e.clientX < window.innerWidth * 0.28) go(i - 1);
+        else go(i + 1);
+      });
+    </script>
+  </body>
+</html>

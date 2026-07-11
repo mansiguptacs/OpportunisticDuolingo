@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Synapse",
+  "version": "0.3.3",
+  "description": "Alchemize any tab into Synapse, and get witty revisit nudges like Duolingo — but for your second brain.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "notifications",
+    "storage",
+    "alarms",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://synapse.butterbase.dev/*"
+  ],
+  "action": {
+    "default_title": "Synapse",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
