@@ -43,6 +43,8 @@ export function AtlasHome() {
   const [memoryOpen, setMemoryOpen] = useState(false);
   const [view, setView] = useState<AtlasView>("neural");
   const [showHero, setShowHero] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -147,6 +149,30 @@ export function AtlasHome() {
     );
   }, [atlas]);
 
+  const searchHits = useMemo(() => {
+    if (!atlas) return [] as Concept[];
+    const q = searchQuery.trim().toLowerCase();
+    if (q.length < 1) return [];
+    return atlas.concepts
+      .filter((c) => {
+        const zone = ZONE_META[c.region];
+        return (
+          c.title.toLowerCase().includes(q) ||
+          zone.label.toLowerCase().includes(q) ||
+          zone.plain.toLowerCase().includes(q) ||
+          c.region.toLowerCase().includes(q)
+        );
+      })
+      .slice(0, 8);
+  }, [atlas, searchQuery]);
+
+  function pickFromSearch(concept: Concept) {
+    setSelected(concept);
+    dismissHero();
+    setSearchQuery("");
+    setSearchOpen(false);
+  }
+
   async function ingestPaste() {
     if (pasteText.trim().length < 20) return;
     setBusy(true);
@@ -249,6 +275,85 @@ export function AtlasHome() {
               ? "Edges show why ideas belong together."
               : "What you revise stays green. What you ignore dries out."}
         </p>
+      </div>
+
+      <div className="pointer-events-auto absolute inset-x-6 top-[8.5rem] z-30 md:inset-x-auto md:left-1/2 md:top-7 md:w-[min(22rem,calc(100vw-22rem))] md:-translate-x-1/2">
+        <label className="sr-only" htmlFor="atlas-concept-search">
+          Search concepts
+        </label>
+        <div className="relative w-full">
+          <input
+            id="atlas-concept-search"
+            type="search"
+            value={searchQuery}
+            autoComplete="off"
+            placeholder="Search concepts…"
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => {
+              window.setTimeout(() => setSearchOpen(false), 150);
+            }}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setSearchOpen(true);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setSearchQuery("");
+                setSearchOpen(false);
+                (e.target as HTMLInputElement).blur();
+              } else if (e.key === "Enter" && searchHits[0]) {
+                e.preventDefault();
+                pickFromSearch(searchHits[0]);
+              }
+            }}
+            className="w-full rounded-full border border-[var(--line)] bg-white/80 py-2.5 pl-4 pr-10 text-sm text-[var(--ink)] shadow-sm outline-none backdrop-blur-md placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[var(--muted)]"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+              <path
+                d="M20 20l-3.5-3.5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          {searchOpen && searchQuery.trim().length > 0 && (
+            <ul
+              role="listbox"
+              aria-label="Concept matches"
+              className="absolute left-0 right-0 top-[calc(100%+0.4rem)] max-h-64 overflow-auto rounded-2xl border border-[var(--line)] bg-white/95 py-1 shadow-lg backdrop-blur-md"
+            >
+              {searchHits.length === 0 ? (
+                <li className="px-4 py-3 text-xs text-[var(--muted)]">
+                  No concepts match “{searchQuery.trim()}”
+                </li>
+              ) : (
+                searchHits.map((c) => (
+                  <li key={c.id} role="option" aria-selected={false}>
+                    <button
+                      type="button"
+                      className="flex w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left hover:bg-[var(--accent)]/8"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => pickFromSearch(c)}
+                    >
+                      <span className="truncate text-sm text-[var(--ink)]">
+                        {c.title}
+                      </span>
+                      <span className="shrink-0 text-[10px] uppercase tracking-wider text-[var(--muted)]">
+                        {ZONE_META[c.region].label}
+                      </span>
+                    </button>
+                  </li>
+                ))
+              )}
+            </ul>
+          )}
+        </div>
       </div>
 
       <div className="pointer-events-none absolute right-6 top-6 z-20 flex flex-col items-end gap-2 md:right-10 md:top-8">
