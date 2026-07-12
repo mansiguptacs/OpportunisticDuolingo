@@ -87,6 +87,7 @@ export function AtlasHome() {
       knownIds?: Set<string>;
       selectId?: string | null;
       sparkIds?: string[];
+      retryLeft?: number;
     }) => {
       const res = await fetch("/api/atlas", { cache: "no-store" });
       const data = (await res.json()) as AtlasResponse;
@@ -122,6 +123,13 @@ export function AtlasHome() {
           dismissHero();
           setToast(`Mapped · now reading “${concept.title}”`);
           window.setTimeout(() => setToast(null), 4000);
+        } else if (opts?.selectId && (opts.retryLeft ?? 0) > 0) {
+          window.setTimeout(() => {
+            void load({
+              ...opts,
+              retryLeft: (opts.retryLeft ?? 1) - 1,
+            });
+          }, 600);
         }
       }
     },
@@ -139,6 +147,7 @@ export function AtlasHome() {
       selectId,
       sparkIds,
       sparkNew: ingested && sparkIds.length === 0,
+      retryLeft: selectId || sparkIds.length || ingested ? 4 : 0,
     });
   }, [load, searchParams]);
 
@@ -438,9 +447,19 @@ export function AtlasHome() {
                 </p>
               );
             }
+            const lines = Array.isArray(teach.summary)
+              ? teach.summary
+              : [];
+            if (!lines.length) {
+              return (
+                <p className="mt-2 text-[10px] text-[var(--muted)]">
+                  Linked neurons stay lit — click a neighbor to traverse.
+                </p>
+              );
+            }
             return (
               <ul className="mt-2 space-y-1.5 text-[11px] leading-snug text-[var(--ink)]">
-                {teach.summary.slice(0, 3).map((line) => (
+                {lines.slice(0, 3).map((line) => (
                   <li key={line} className="flex gap-2">
                     <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" />
                     <span>{line}</span>

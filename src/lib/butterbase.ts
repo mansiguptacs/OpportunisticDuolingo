@@ -10,25 +10,56 @@ import type {
   Source,
   TeachCard,
 } from "./types";
+import { BB_EMBEDDED } from "./bb-embedded";
 
 const USER_ID = "lifelong-learner";
 
-export function butterbaseEnabled() {
-  return Boolean(
-    process.env.BUTTERBASE_API_KEY && process.env.BUTTERBASE_APP_ID
+/** Platform reserves BUTTERBASE_* on Edge; SYNAPSE_BB_* aliases are settable via update_env. */
+function bbApiKey() {
+  return (
+    process.env.BUTTERBASE_API_KEY ||
+    process.env.SYNAPSE_BB_KEY ||
+    process.env.SYNAPSE_DATA_API_KEY ||
+    BB_EMBEDDED.apiKey ||
+    ""
   );
 }
 
+function bbAppId() {
+  return (
+    process.env.BUTTERBASE_APP_ID ||
+    process.env.SYNAPSE_BB_APP_ID ||
+    process.env.SYNAPSE_APP_ID ||
+    BB_EMBEDDED.appId ||
+    ""
+  );
+}
+
+function bbApiUrl() {
+  return (
+    process.env.BUTTERBASE_API_URL ||
+    process.env.SYNAPSE_BB_URL ||
+    BB_EMBEDDED.apiUrl ||
+    "https://api.butterbase.ai/v1"
+  );
+}
+
+export function butterbaseEnabled() {
+  return Boolean(bbApiKey() && bbAppId());
+}
+
+export function butterbaseAppId() {
+  return bbAppId() || null;
+}
+
 function baseUrl() {
-  const root = (
-    process.env.BUTTERBASE_API_URL || "https://api.butterbase.ai/v1"
-  ).replace(/\/$/, "");
-  return `${root}/${process.env.BUTTERBASE_APP_ID}`;
+  const root = bbApiUrl().replace(/\/$/, "");
+  return `${root}/${bbAppId()}`;
 }
 
 function headers() {
   return {
-    Authorization: `Bearer ${process.env.BUTTERBASE_API_KEY}`,
+    Authorization: `Bearer ${bbApiKey()}`,
     "Content-Type": "application/json",
   };
 }
@@ -50,6 +81,51 @@ function parseJsonField<T>(value: unknown, fallback: T): T {
     }
   }
   return value as T;
+}
+
+/** Coerce teach/quiz JSON into a string[] (Grok/DB sometimes store objects). */
+export function normalizeStringList(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => {
+        if (typeof item === "string") return item.trim();
+        if (item == null) return "";
+        if (typeof item === "object" && "text" in (item as object)) {
+          return String((item as { text?: unknown }).text ?? "").trim();
+        }
+        return String(item).trim();
+      })
+      .filter(Boolean);
+  }
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return [];
+    try {
+      return normalizeStringList(JSON.parse(trimmed));
+    } catch {
+      return [trimmed];
+    }
+  }
+  if (value && typeof value === "object") {
+    const obj = value as Record<string, unknown>;
+    for (const key of ["bullets", "summary", "points", "items", "lines"]) {
+      if (key in obj) return normalizeStringList(obj[key]);
+    }
+  }
+  return [];
+}
+
+function asRows(payload: unknown): Record<string, unknown>[] {
+  if (Array.isArray(payload)) return payload as Record<string, unknown>[];
+  if (payload && typeof payload === "object") {
+    const obj = payload as Record<string, unknown>;
+    for (const key of ["data", "rows", "items", "results"]) {
+      if (Array.isArray(obj[key])) {
+        return obj[key] as Record<string, unknown>[];
+      }
+    }
+  }
+  return [];
 }
 
 export async function upsertUser(user: AtlasState["user"]) {
@@ -241,13 +317,14 @@ export async function fetchAtlasFromButterbase(): Promise<AtlasState | null> {
         bbFetch(`/quiz_bank?limit=200`),
       ]);
     if (!conceptsRes.ok) return null;
-    const users = (await usersRes.json()) as AtlasState["user"][];
-    const sourcesRaw = (await sourcesRes.json()) as Record<string, unknown>[];
-    const conceptsRaw = (await conceptsRes.json()) as Record<string, unknown>[];
-    const teachRaw = (await teachRes.json()) as Record<string, unknown>[];
-    const quizRaw = (await quizRes.json()) as Record<string, unknown>[];
 
-    if (!Array.isArray(conceptsRaw) || conceptsRaw.length === 0) return null;
+    const users = asRows(await usersRes.json()) as unknown as AtlasState["user"][];
+    const sourcesRaw = asRows(await sourcesRes.json());
+    const conceptsRaw = asRows(await conceptsRes.json());
+    const teachRaw = asRows(await teachRes.json());
+    const quizRaw = asRows(await quizRes.json());
+
+    if (conceptsRaw.length === 0) return null;
 
     const user =
       (Array.isArray(users) && users.find((u) => u.id === USER_ID)) ||
@@ -288,7 +365,9 @@ export async function fetchAtlasFromButterbase(): Promise<AtlasState | null> {
         id: String(t.id),
         conceptId: String(t.concept_id || t.conceptId),
         title: String(t.title),
-        summary: parseJsonField<string[]>(t.summary_json ?? t.summary, []),
+        summary: normalizeStringList(
+          parseJsonField(t.summary_json ?? t.summary, t.summary_json ?? t.summary)
+        ),
         diagramMermaid: (t.diagram_mermaid || t.diagramMermaid || undefined) as
           | string
           | undefined,
@@ -296,11 +375,15 @@ export async function fetchAtlasFromButterbase(): Promise<AtlasState | null> {
       quizBank: (Array.isArray(quizRaw) ? quizRaw : []).map((q) => ({
         id: String(q.id),
         prompt: String(q.prompt),
-        choices: parseJsonField<string[]>(q.choices_json ?? q.choices, []),
+        choices: normalizeStringList(
+          parseJsonField(q.choices_json ?? q.choices, q.choices_json ?? q.choices)
+        ),
         correctIndex: Number(q.correct_index ?? q.correctIndex ?? 0),
-        conceptIds: parseJsonField<string[]>(
-          q.concept_ids_json ?? q.conceptIds,
-          []
+        conceptIds: normalizeStringList(
+          parseJsonField(
+            q.concept_ids_json ?? q.conceptIds,
+            q.concept_ids_json ?? q.conceptIds
+          )
         ),
         synthesizesWith: (q.synthesizes_with ||
           q.synthesizesWith ||

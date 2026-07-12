@@ -28,6 +28,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# build-time Butterbase credentials (generated from .env.local)
+src/lib/bb-embedded.ts
+
 # local synapse store
 .data/
 

@@ -12,6 +12,7 @@ import type {
 import { writePracticeMemory, searchBlindSpots } from "./everos";
 import { grokEnabled, refineWithGrok } from "./grok";
 import {
+  normalizeStringList,
   syncIngestToButterbase,
   upsertUser,
   upsertConcepts,
@@ -197,7 +198,7 @@ export async function ingestContent(input: IngestRequest): Promise<IngestResult>
     id: slugId(`tc${i}`),
     conceptId: concepts[Math.min(i, concepts.length - 1)]?.id || concepts[0].id,
     title: card.title,
-    summary: card.summary,
+    summary: normalizeStringList(card.summary),
     diagramMermaid: card.diagramMermaid,
   }));
 
@@ -251,19 +252,32 @@ function hoursUntilCritical(concept: Concept): number {
 }
 
 function teachForConcept(state: AtlasState, concept: Concept): TeachCard {
-  return (
-    state.teachCards.find((t) => t.conceptId === concept.id) ||
-    state.teachCards[0] || {
-      id: `teach-fallback-${concept.id}`,
+  const found = state.teachCards.find((t) => t.conceptId === concept.id);
+  if (found) {
+    return {
+      ...found,
+      summary: normalizeStringList(found.summary),
+    };
+  }
+  const fallback = state.teachCards[0];
+  if (fallback) {
+    return {
+      ...fallback,
       conceptId: concept.id,
-      title: concept.title,
-      summary: [
-        `${concept.title} is a core idea in your atlas.`,
-        "Revisit the source, then retrieve it from memory.",
-        "Link it to a neighbor concept to lock it in.",
-      ],
-    }
-  );
+      title: fallback.title || concept.title,
+      summary: normalizeStringList(fallback.summary),
+    };
+  }
+  return {
+    id: `teach-fallback-${concept.id}`,
+    conceptId: concept.id,
+    title: concept.title,
+    summary: [
+      `${concept.title} is a core idea in your atlas.`,
+      "Revisit the source, then retrieve it from memory.",
+      "Link it to a neighbor concept to lock it in.",
+    ],
+  };
 }
 
 function makeSpeedProbe(concept: Concept, teach: TeachCard): QuizQuestion {

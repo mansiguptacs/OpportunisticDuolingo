@@ -1,18 +1,24 @@
 import { NextResponse } from "next/server";
 import { grokEnabled } from "@/lib/grok";
-import { butterbaseEnabled } from "@/lib/butterbase";
-import { hydrateStoreFromButterbase, pushStoreToButterbase } from "@/lib/store";
+import { butterbaseAppId, butterbaseEnabled } from "@/lib/butterbase";
+import {
+  getAtlas,
+  hydrateStoreFromButterbase,
+  pushStoreToButterbase,
+} from "@/lib/store";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   await hydrateStoreFromButterbase();
+  const atlas = getAtlas();
   return NextResponse.json({
     grok: grokEnabled(),
     butterbase: butterbaseEnabled(),
     everos: Boolean(process.env.EVEROS_API_KEY),
-    appId: process.env.BUTTERBASE_APP_ID || null,
+    appId: butterbaseAppId(),
+    concepts: atlas.concepts.length,
   });
 }
 

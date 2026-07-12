@@ -575,7 +575,10 @@ export default function TodayPage() {
           </h1>
           <VitalityChip hours={step.hoursUntilCritical} status={step.status} />
           <ul className="mt-6 space-y-3 text-base leading-relaxed">
-            {step.card.summary.map((line) => (
+            {(Array.isArray(step.card.summary)
+              ? step.card.summary
+              : []
+            ).map((line) => (
               <li key={line} className="flex gap-3">
                 <span className="text-[var(--accent)]">▸</span>
                 <span>{line}</span>
